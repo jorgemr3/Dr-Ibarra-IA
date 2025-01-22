@@ -1,0 +1,11 @@
+# Ignorar archivos de imagen
+*.jpg
+*.jpeg
+*.png
+*.webp
+
+# Ignorar archivos de documentos
+*.docx
+*.pdf
+*.xlsx
+*.csv
