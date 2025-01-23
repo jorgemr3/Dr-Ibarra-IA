@@ -9,10 +9,10 @@ except Exception as e:
     print("Ocurrió un error:", e)
     exit()
 
-y = [fila[1:7] for fila in dataset]
+y = [fila[1:7] for fila in dataset] 
 
 # vector problema
-vp = [9, 3, 6, 0, 1]
+vp = [9, 7, 6, 0, 1, 2]
 
 # Distancia Manhattan
 R_manhattan = [  
