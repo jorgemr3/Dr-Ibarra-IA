@@ -20,7 +20,7 @@ prueba = random.sample(dataset, num_prueba)
 # Seleccionar el 70% de los datos restantes
 entrenamiento = [fila for fila in dataset if fila not in prueba]
 
-confusion = np.zeros((2,2)) # verdadero positivo, falso positivo, verdadero negativo, falso negativo
+confusion = [[0,0],[0,0]]# verdadero positivo, falso positivo, verdadero negativo, falso negativo
 vp = confusion[0,0]
 fp = confusion[0,1]
 vn = confusion[1,0]
