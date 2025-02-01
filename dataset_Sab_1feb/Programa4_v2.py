@@ -1,5 +1,5 @@
 try: 
-    with open("dataset.txt", "r") as file:
+    with open("C:/Users/Jorge/Desktop/Dr-Ibarra-IA/dataset_Sab_1feb/dataset.txt", "r") as file:
         dataset = [list(map(int, line.strip().split())) for line in file]
 except FileNotFoundError:
     print('el archivo no existe')
@@ -12,7 +12,7 @@ import random
 import numpy as np 
 from collections import Counter
 
-# Configuración
+#region CONFIGURACION
 #prueba = [] #el 30% de los datos
 # Seleccionar el 30% de los datos de forma aleatoria
 num_prueba = int(len(dataset) * 0.3) # 30% de los datos 
@@ -25,30 +25,30 @@ K = 140  # Número de óptimos a considerar
 '''
 Cuando se trabaja con una diferente proporcion, porfavor modificar variable K
 
-con proporcion 70% - 30% se recomienda K = 140
+con proporcion 70% - 30% se recomienda K = 140 (num prueba = 0.3)
 
-con proporcion 80% - 20% se recomienda K = 160
+con proporcion 80% - 20% se recomienda K = 160 (num prueba = 0.2)
 
-con proporcion 90% - 10% se recomienda K = 180 
+con proporcion 90% - 10% se recomienda K = 180 (num prueba = 0.1)
 
 siempre respetando el 20% de las distancias o metricas (asi lo dice ibarra lol)
 
 '''
+#endregion
+
 metricas = ['manhattan', 'euclidiana', 'euclidiana_normalizada', 'coseno', 'Sorensen_Dice', 'Jaccard']
 
-# Inicializar matriz de confusión para cada métrica
+# arreglo de ceros de tamanio 2 x 2 por metricas 
 confusion_metrics = {metrica: np.zeros((2, 2), dtype=int) for metrica in metricas}
 
 def actualizar_confusion(prediccion, real, matriz):
-    """Actualiza la matriz de confusión"""
-    ''' si real es 1 y la prediccion es 1 es verdadero positivo'''
-    '''si prediccion no es 1 entonces es falso negativo'''
+    """Actualiza la matriz de confusión, si real es 1 y la prediccion es 1 es verdadero positivo, si prediccion no es 1 entonces es falso negativo"""
     if real == 1:
-        if prediccion == 1: matriz[0, 0] += 1  # VP
-        else: matriz[1, 0] += 1               # VN
-    else:
-        if prediccion == 1: matriz[0, 1] += 1  # FP
-        else: matriz[1, 1] += 1               # FN
+        if prediccion == 1: matriz[0, 0] += 1  # VP real 1 prediccion 1
+        else: matriz[1, 0] += 1               # VN real 1 prediccion 2
+    else: # real == 2
+        if prediccion == 1: matriz[0, 1] += 1  # FP real 2 prediccion 1
+        else: matriz[1, 1] += 1               # FN real 2 prediccion 2
         
 
 
@@ -62,12 +62,13 @@ for fila in prueba:
         'Sorensen_Dice': [],
         'Jaccard': []
     }
-    
+    # la informacion de los resultados se guarda en un diccionario de arreglos 
     #------------------------------------------
     # fila[i] = x 
     # fila_entrenamiento[i] = y
     #------------------------------------------
     
+    #region CALC. METRICAS
     x_cuadrada = sum(fila[i]**2 for i in range(1, len(fila)-1)) # ciclo de x al cuadrado
     # ciclo_multiplicativo = sum(fila[i] * fila_entrenamiento[i] for i in range(1, len(fila)-1)) # ciclo de x por y en la posicion i
     # y_cuadrada = sum(fila_entrenamiento[i]**2 for i in range(1, len(fila)-1)) # ciclo de y al cuadrado
@@ -108,7 +109,9 @@ for fila in prueba:
         distancia =  sum(fila[i] * fila_entrenamiento[i] for i in range(1, len(fila)-1)) / x_cuadrada + sum(fila_entrenamiento[i]**2 for i in range(1, len(fila)-1)) - sum(fila[i] * fila_entrenamiento[i] for i in range(1, len(fila)-1))
         resultados['Jaccard'].append((fila_entrenamiento[0], distancia, fila_entrenamiento[-1]))
     resultados['Jaccard'].sort(reverse=True)
+    #endregion
     
+    #region fill confusion matrix
     for metrica in metricas:
         # Ordenar y tomar los K vecinos
         # resultados[metrica].sort(key=lambda x: x[1])
@@ -125,7 +128,9 @@ for fila in prueba:
         
         # Actualizar matriz de confusión
         actualizar_confusion(prediccion, fila[-1], confusion_metrics[metrica])
-    
+    #endregion
+
+#region PRECISION
 # Función para calcular precisión
 def ibarra_precision(matriz):
     vp = matriz[0, 0] # verdadero positivo 
@@ -153,7 +158,9 @@ def accuracy(matriz):
     total = matriz.sum()
     return (vp + vn) / total if total != 0 else 0
 
-# Resultados finales
+#endregion
+
+#region Resultados 
 print(f" ===== Precisión con K={K} ===== ")
 
 for metrica in metricas:
@@ -162,8 +169,10 @@ print('')
 print('============ Precision con la formula del Dr Ibarra (Pizarron) ============' )
 for metrica in metricas:
     print(f"{metrica.upper():<20}: Precision: {ibarra_precision(confusion_metrics[metrica]):.3%})")
+#endregion
  
-''' descomentar para ver los resultados de las distancias '''
+#region COMENTARIOS
+'''=== descomentar para ver los resultados de las distancias=== '''
 # for i in manhattan:  print(i)  
 
 # for i in euclidiana:  print(i) 
@@ -175,7 +184,7 @@ for metrica in metricas:
 # for i in Sorensen_Dice:  print(i)
 
 # for i in Jaccard:  print(i)
-
+'''=========================================================='''
      
     # guardar en distancias manhatan indice , valor
     
@@ -217,5 +226,5 @@ for metrica in metricas:
 # fn = confusion[1,1]
 # R_manhattan = [] # agregar la columna de 
 # R_euclidiana = []
-    
+#endregion
     
