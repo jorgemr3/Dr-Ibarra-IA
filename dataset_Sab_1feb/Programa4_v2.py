@@ -13,27 +13,14 @@ import numpy as np
 from collections import Counter
 
 #region CONFIGURACION
-#prueba = [] #el 30% de los datos
-# Seleccionar el 30% de los datos de forma aleatoria
-num_prueba = int(len(dataset) * 0.3) # 30% de los datos 
+num_prueba = int(len(dataset) * 0.1) # 30% de los datos 
 indices = list(range(len(dataset)))
 random.shuffle(indices)
 prueba = [dataset[i] for i in indices[:num_prueba]]
 entrenamiento = [dataset[i] for i in indices[num_prueba:]]
 
-K = 140  # Número de óptimos a considerar
-'''
-Cuando se trabaja con una diferente proporcion, porfavor modificar variable K
+K = 180  # Número de óptimos a considerar
 
-con proporcion 70% - 30% se recomienda K = 140 (num prueba = 0.3)
-
-con proporcion 80% - 20% se recomienda K = 160 (num prueba = 0.2)
-
-con proporcion 90% - 10% se recomienda K = 180 (num prueba = 0.1)
-
-siempre respetando el 20% de las distancias o metricas (asi lo dice ibarra lol)
-
-'''
 #endregion
 
 metricas = ['manhattan', 'euclidiana', 'euclidiana_normalizada', 'coseno', 'Sorensen_Dice', 'Jaccard']
@@ -49,9 +36,6 @@ def actualizar_confusion(prediccion, real, matriz):
     else: # real == 2
         if prediccion == 1: matriz[0, 1] += 1  # FP real 2 prediccion 1
         else: matriz[1, 1] += 1               # FN real 2 prediccion 2
-        
-
-
 
 for fila in prueba:
     resultados = {
@@ -67,7 +51,6 @@ for fila in prueba:
     # fila[i] = x 
     # fila_entrenamiento[i] = y
     #------------------------------------------
-    
     #region CALC. METRICAS
     x_cuadrada = sum(fila[i]**2 for i in range(1, len(fila)-1)) # ciclo de x al cuadrado
     # ciclo_multiplicativo = sum(fila[i] * fila_entrenamiento[i] for i in range(1, len(fila)-1)) # ciclo de x por y en la posicion i
@@ -110,7 +93,6 @@ for fila in prueba:
         resultados['Jaccard'].append((fila_entrenamiento[0], distancia, fila_entrenamiento[-1]))
     resultados['Jaccard'].sort(reverse=True)
     #endregion
-    
     #region fill confusion matrix
     for metrica in metricas:
         # Ordenar y tomar los K vecinos
@@ -170,61 +152,3 @@ print('============ Precision con la formula del Dr Ibarra (Pizarron) ==========
 for metrica in metricas:
     print(f"{metrica.upper():<20}: Precision: {ibarra_precision(confusion_metrics[metrica]):.3%})")
 #endregion
- 
-#region COMENTARIOS
-'''=== descomentar para ver los resultados de las distancias=== '''
-# for i in manhattan:  print(i)  
-
-# for i in euclidiana:  print(i) 
-
-# for i in euclidiana_normalizada:  print(i)
-
-# for i in coseno:  print(i)
-
-# for i in Sorensen_Dice:  print(i)
-
-# for i in Jaccard:  print(i)
-'''=========================================================='''
-     
-    # guardar en distancias manhatan indice , valor
-    
-    
-    
-    # print(distancias_euclidiana[0][1])
-    
-     # guardar en distancias manhatan indice , valor 
-    # print(distancias_manhattan[0][1]) 
-    # R_manhattan.append(distancias_manhattan[0][1])
-    # Calcular la distancia Euclidiana
-    
-    
-    # R_euclidiana.append(distancias_euclidiana[0][1])
-    # Calcular la precisión
-    # si la respuesta en el pronostico  es igual a la respuesta en lo predecido es 1 en vp 
-    # si la respuesta en pronostico es diferente a la respuesta en lo predecido es 1 en fp
-    # si la respuesta en predecido es diferente a la respuesta en el pronostico es 1 en vn
-    # si la respuesta en predecido es igual a la respuesta en el pronostico es 1 en fn
-    # 
-    # if fila[-1] == R_manhattan[-1]:
-    #     if fila[-1] == 1:
-    #         vp += 1
-    #     else:
-    #         vn += 1
-    # else:
-    #     if fila[-1] == 1:
-    #         fn += 1
-    #     else:
-    #         fp += 1
-    # Seleccionar el 70% de los datos restantes
-# entrenamiento = [fila for fila in dataset if fila not in prueba]
-
-
-# confusion = np.zeros((2, 2), dtype=int)# verdadero positivo, falso positivo, verdadero negativo, falso negativo
-# vp = confusion[0,0]
-# fp = confusion[0,1]
-# vn = confusion[1,0]
-# fn = confusion[1,1]
-# R_manhattan = [] # agregar la columna de 
-# R_euclidiana = []
-#endregion
-    
