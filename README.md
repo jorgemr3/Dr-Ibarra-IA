@@ -1,16 +1,11 @@
-# Dr-Ibarra-IA 🧠📊
 
-**Análisis de precisión en modelos personalizados mediante selección de K óptimos y matrices de confusión**
-
----
 
 ## Descripción 📄
 Este repositorio contiene un enfoque alternativo para evaluar la precisión de modelos predictivos, evitando algoritmos tradicionales como K-Nearest Neighbors (KNN). En su lugar, se implementa un método simplificado que:
 1. **Selecciona los K casos óptimos por métrica** (Manhattan, Euclidiana, Coseno, etc.).
 2. **Calcula la precisión** mediante matrices de confusión generadas al comparar etiquetas reales vs. predicciones basadas en los K seleccionados.
 
-Proyecto desarrollado bajo la asesoría del **Dr. Ibarra**.
-
+=
 ---
 
 ## Características clave 🔑
