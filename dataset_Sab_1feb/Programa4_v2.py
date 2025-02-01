@@ -92,7 +92,7 @@ for fila in prueba:
         suma_xy = sum(fila[i] * fila_entrenamiento[i] for i in range(1, len(fila)-1))
         suma_x2 = x_cuadrada
         suma_y2 = sum(fila_entrenamiento[i]**2 for i in range(1, len(fila)-1))
-        distancia = suma_xy / (suma_x2 + suma_y2 - suma_xy)
+        distancia = suma_xy / (suma_x2 + suma_y2 - suma_xy) if (suma_x2 + suma_y2 - suma_xy) != 0 else 0
         # distancia =  sum(fila[i] * fila_entrenamiento[i] for i in range(1, len(fila)-1)) / x_cuadrada + sum(fila_entrenamiento[i]**2 for i in range(1, len(fila)-1)) - sum(fila[i] * fila_entrenamiento[i] for i in range(1, len(fila)-1))
         resultados['Jaccard'].append((fila_entrenamiento[0], distancia, fila_entrenamiento[-1]))
     resultados['Jaccard'].sort(reverse=True)
