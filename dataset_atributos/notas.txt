@@ -1,0 +1,28 @@
+calcular entropia del arbol 
+
+despues de calcular la entropia del arbol con el numero de casos de si y no usando la formula de entropia de shanon
+se calcula la entropia de cada variable contando cuantas veces existe el si y no por atributo por variable en forma de tabla 
+
+
+variable n
+
+atributo    si      no      casos       Earbol
+poco        2       0         2            0
+
+reg        0        1         1             0
+
+mucho      1       1          2            1
+                          TOTAL = 5  
+
+ si Ear == Nan entonces Ear = 0 (solo aplica cuando se saca la entropia por variable)
+
+
+
+despues de calcular la entropia por variable entonces calcular la ganancia por variable 
+con formula de ganancia
+
+cuando se saca la ganancia se resta con la entropia del arbol 
+
+y cuando se saque ese numero que representa cada variable se construye el arbol relacionando cada variable con el atributo mas alto 
+de cada variable 
+

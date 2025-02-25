@@ -2,7 +2,7 @@ import random
 
 with open("C:/Users/Jorge/Desktop/Dr-Ibarra-IA/dataset_Sab_1feb/dataset.txt", "w") as file:
     for i in range(1000):
-        fila = [i + 1] + [random.randint(1, 10) for _ in range(6)] + [random.randint(1, 2)]
+        fila = [i + 1] + [random.randint(1, 10) for _ in range(7)] + [random.randint(1, 2)]
         file.write(" ".join(map(str, fila)) + "\n")
 
 print("DATASET GENERADO")
