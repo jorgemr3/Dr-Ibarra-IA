@@ -12,7 +12,6 @@ def mostrar_clusters():
     plt.xlabel('X2')
     plt.ylabel('X3')
     plt.title('Clustering con K-Means')
-    # plt.grid()
     plt.show()
 
 def mostrar_centroides():
@@ -26,7 +25,7 @@ def mostrar_centroides():
     plt.title('Centroides por cluster de datos')
     plt.show()
 
-def elbow():
+def medir_codo():
     # metodo del codo
     codo = []
     for i in range(1, 11):
@@ -39,12 +38,6 @@ def elbow():
     plt.grid()
     plt.ylabel('Inertia')
     plt.show()
-    # Visualización inicial
-    plt.scatter(df['X2'], df['X3'])
-    plt.xlabel('X2')
-    plt.ylabel('X3')
-    plt.title('Distribución de los puntos')
-    plt.show()
 
 
 
@@ -54,7 +47,14 @@ df = pd.read_csv('C:/Users/Jorge/Desktop/Dr-Ibarra-IA/kmeans/dataset.csv')
 x = df.iloc[:, 2:4]
 
 # metodo del codo
-elbow()
+medir_codo()
+
+# Visualización inicial
+plt.scatter(df['X2'], df['X3'])
+plt.xlabel('X2')
+plt.ylabel('X3')
+plt.title('Distribución de los puntos')
+plt.show()
 
 
 # Aplicar KMeans con K clusters
@@ -76,7 +76,6 @@ print('Coordenadas de centroides')
 print('')
 for i in kmeans.cluster_centers_:
     print(i)
-# print('-'*50)
 
 mostrar_centroides()
 
