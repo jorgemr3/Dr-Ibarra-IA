@@ -2,9 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 
-#  TODO: Cambiar el valor de K
-K = 4
-
 
 def mostrar_clusters():
     # Visualización de los clusters
@@ -41,43 +38,49 @@ def medir_codo():
 
 
 
-# Cargar el dataset
-df = pd.read_csv('C:/Users/Jorge/Desktop/Dr-Ibarra-IA/kmeans/dataset.csv')
-# Selección de características (x2 y x3)
-x = df.iloc[:, 2:4]
 
-# metodo del codo
-medir_codo()
+if __name__=='__main__':
+    #  TODO: Cambiar el valor de K
+    K = 4
+    
+        
+    # Cargar el dataset
+    df = pd.read_csv('C:/Users/Jorge/Desktop/Dr-Ibarra-IA/kmeans/dataset.csv')
+    # Selección de características (x2 y x3)
+    x = df.iloc[:, 2:4]
 
-# Visualización inicial
-plt.scatter(df['X2'], df['X3'])
-plt.xlabel('X2')
-plt.ylabel('X3')
-plt.title('Distribución de los puntos')
-plt.show()
+    # metodo del codo
+    medir_codo()
+    #tambien muestra grafica de codo
 
+    # Visualización inicial
+    plt.scatter(df['X2'], df['X3'])
+    plt.xlabel('X2')
+    plt.ylabel('X3')
+    plt.title('Distribución de los puntos')
+    plt.show()
+    
+    # Aplicar KMeans con K clusters
+    kmeans = KMeans(n_clusters=K, n_init='auto', random_state=42)
+    df_clusterizado = kmeans.fit_predict(x)
 
-# Aplicar KMeans con K clusters
-kmeans = KMeans(n_clusters=K, n_init='auto', random_state=42)
-df_clusterizado = kmeans.fit_predict(x)
+    # Crear una copia del DataFrame con los clusters
+    df_copia = df.copy()
+    df_copia['cluster'] = df_clusterizado
 
-# Crear una copia del DataFrame con los clusters
-df_copia = df.copy()
-df_copia['cluster'] = df_clusterizado
+    print('-------dataset con grupos---------')
+    print(df_copia.head())
 
-print('-------dataset con grupos---------')
-print(df_copia.head())
+    mostrar_clusters()
 
-mostrar_clusters()
+    print('-'*50)
+    # Mostrar los centroides
+    print('Coordenadas de centroides')
+    print('')
+    for i in kmeans.cluster_centers_:
+        print(i)
 
-print('-'*50)
-# Mostrar los centroides
-print('Coordenadas de centroides')
-print('')
-for i in kmeans.cluster_centers_:
-    print(i)
-
-mostrar_centroides()
+    mostrar_centroides()
 
 
 
