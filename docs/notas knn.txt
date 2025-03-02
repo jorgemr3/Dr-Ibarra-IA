@@ -1,0 +1,9 @@
+leer dataset
+
+elegir K instancias o centroides aleatorios del dataset ( en este caso 3 )
+
+sacar distancia de centroide n con cada uno de las instancias restantes (generar matriz de distancias)
+
+generar arreglo de respuestas por iteracion usando etiquetas marcando que centroide fue mayor por instancia 
+
+si el arreglo de la iteracion n-1 es igual a la matriz de la iteracion n entonces dejas de iterar, asumiendo que tienes 2 iteraciones ya generadas

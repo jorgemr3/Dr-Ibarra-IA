@@ -102,8 +102,8 @@ if __name__ == "__main__":
     for i in range(K):
         for j in range(m):
             cent[i][j] = random.randint(minim[j], maxim[j])
-    grupos = [0 for i in range(n)]
-    cont = [0 for i in range(K)] # ver
+    grupos = [0 for _ in range(n)]
+    cont = [0 for _ in range(K)] # ver
 
     continuar = True
     while continuar:
@@ -121,7 +121,7 @@ if __name__ == "__main__":
             prom[i] = prom[i] / cont[i]
     promDistGlobal = numpy.average(prom)
 
-    print("Promedio Distancia Global =", promDistGlobal)
+    print("Promedio Distancia Global = {:.5f}".format(promDistGlobal))
     print("Centroides")
     for i in range(K):
         print(cent[i])
